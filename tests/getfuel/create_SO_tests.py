@@ -1,4 +1,4 @@
-from pages.courses.register_courses_page import RegisterCoursesPage
+from pages.getfuel.create_SO_page import CreateSalesOrderPage
 from pages.home.navigation_page import NavigationPage
 from utilities.teststatus import Status
 import unittest
@@ -10,11 +10,11 @@ import time
 
 @pytest.mark.usefixtures("oneTimeSetUp", "setUp")
 @ddt
-class RegisterCoursesTests(unittest.TestCase):
+class RequestFuelTests(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
     def objectSetup(self, oneTimeSetUp):
-        self.courses = RegisterCoursesPage(self.driver)
+        self.so = CreateSalesOrderPage(self.driver)
         self.ts = Status(self.driver)
         self.nav = NavigationPage(self.driver)
 
@@ -26,13 +26,14 @@ class RegisterCoursesTests(unittest.TestCase):
     #you can provide with only with the file name without the path since it is saved under the project
     @data(*getCSVData("/Users/nhussein/PycharmProjects/Gportal/testdata.csv"))
     @unpack
-    def test_invalidEnrollment(self,courseName,ccNum,ccExp,ccCvv):
-        self.courses.enterCourseName(courseName)
-        self.courses.selectCourseToEnroll(courseName)
-        self.courses.enrollCourse(num=ccNum, exp=ccExp, cvv=ccCvv)
-        time.sleep(5)
-        #result = self.courses.verifyCardDecline()
-        result = self.courses.verifyEnrollFailed()
+    def test_validateSoCreation(self,icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
+                             arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin):
+        self.so.enterTripInformation(icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
+                             arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin)
+        self.so.clickRequestFuel()
+        # self.so.getQuoteNumber()
+        # self.so.getSoNumber()
+        result = self.so.verifySOcreated()
         self.ts.markFinal("test_invalidEnrollment", result,
                           "Enrollment Failed Verification")
 

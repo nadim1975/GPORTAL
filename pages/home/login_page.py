@@ -12,47 +12,48 @@ class LoginPage(BasePage):
         self.driver = driver
         self.nav = NavigationPage(driver)
     # Locators
-    _login_link = "//div[@id='navbar']//a[@href='/sign_in']"
-    _email_field = 'user_email'
-    _password_field = 'user_password'
-    _login_button = "commit"
-    _user_icon = "//div[@id='navbar']//li[@class='dropdown']"
-    _login_error = "//div[contains(text(),'Invalid email or password.')]"
-    _logout = "//div[@id='navbar']//a[@href='/sign_out']"
+    _username_field = 'username'
+    _password_field = 'password'
+    _login_button = "kc-login"
+    _login_error = "//span[@class='kc-feedback-text']"
+    _forgot_password = "//a[contains(text(),'Forgot Password?')]"
+    _user_icon = "//span[@class='d-none d-md-flex']"
+    _logout = "//span[contains(text(),'Logout')]"
 
     # Methods to perform actions on elements
 
-    def clickLoginLink(self):
-        self.elementClick(self._login_link,'xpath')
-
-    def enterEmail(self,email):
-        self.sendKeys(email,self._email_field)
+    def enterUserName(self,username):
+        self.sendKeys(username,self._username_field)
     def enterPassword(self,password):
         self.sendKeys(password,self._password_field)
     def clickLoginButton(self):
-        self.elementClick(self._login_button,'name')
+        self.elementClick(self._login_button)
+
+    def checkLoginError(self):
+        result1 = self.getElementAttributeValue("text",self._login_error,"xpath")
+        return result1
+        # Sorry, we were not able to identify your information in our system. Please try again, or if you recently changed your username or email address, please call 1 888 939 4852 for assistance.
+
+    def clickForgotPassword(self):
+        self.elementClick(self._forgot_password,'xpath')
+
     def verifyLoginSuccessful(self):
-        result = self.isElementPresent(self._user_icon,'xpath')
+        userIconElement = self.waitForElement(self._user_icon,'xpath',30)
+        result = self.isElementPresent(element=userIconElement)
         return result
+
     def verifyLoginFailure(self):
         result = self.isElementPresent(self._login_error,'xpath')
         return result
 
-    def clearFields(self):
-        emailField = self.getElement(locator=self._email_field)
-        emailField.clear()
-        passwordField = self.getElement(locator=self._password_field)
-        passwordField.clear()
-
-    def verifyLoginPageTitle(self,title):
-        return self.verifyPageTitle(title)
-
+    def clickLogout(self):
+        userDropDown = self.waitForElement(self._user_icon,'xpath',10,1)
+        self.elementClick(element=userDropDown)
+        self.elementClick(self._logout,'xpath')
 
     #Main Method
-    def login(self,email='',password=''):
-        self.clickLoginLink()
-        self.clearFields()
-        self.enterEmail(email)
+    def login(self,username='',password=''):
+        self.enterUserName(username)
         self.enterPassword(password)
         self.clickLoginButton()
 

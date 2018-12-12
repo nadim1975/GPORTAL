@@ -67,13 +67,13 @@ class WebDriverFactory():
         #selecting the URL based on the environment param
         #env = self.environment.lower()
         if self.environment == 'qa':
-            baseURL = "https://learn.letskodeit.com/"
+            baseURL = "https://portal.qa.aws.wfscorp.com/"
         elif self.environment == 'test':
-            baseURL = "https://learn.letskodeit.com/"
-        elif self.environment == 'psup1':
-            baseURL = "https://learn.letskodeit.com/"
+            baseURL = "https://portal.test.aws.wfscorp.com/"
+        elif self.environment == 'future':
+            baseURL = "https://portal.future.aws.wfscorp.com/"
         else:
-            baseURL = "https://sso.teachable.com/secure/42299/users/sign_in?clean_login=true&reset_purchase_session=1"
+            baseURL = "https://portal.qa.aws.wfscorp.com/"
 
         # Loading browser with App URL
 

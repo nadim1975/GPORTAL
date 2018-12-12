@@ -16,9 +16,9 @@ class LoginTests(unittest.TestCase):
     @pytest.mark.run(order=2)
     def test_validlogin(self):
         #print("######## execution of correct login")
-        self.lp.login('test@email.com', 'abcabc')
-        result1 = self.lp.verifyLoginPageTitle("Let's Kode It")
-        self.ts.mark(result1,'Title is not correct')
+        self.lp.login('portalaviation', 'Welcome01')
+        result1 = self.lp.verifyPageTitle("Global Portal")
+        self.ts.mark(result1,'Title is correct')
         #self.lp.login('test@email.com','abcabc')
         result2 = self.lp.verifyLoginSuccessful()
         self.ts.mark(result2,"Login was successful")
@@ -30,7 +30,7 @@ class LoginTests(unittest.TestCase):
          # The class Setup fixture will open the URL the first time
         #print("**********   Execution of wrong login")
         self.lp.logout()
-        self.lp.login('test@email.com','abc')
+        self.lp.login('portalaviation','wrong')
         result = self.lp.verifyLoginFailure()
         self.ts.mark(result,"Couldn't login with wrong userid/password")
      #   assert result == True
