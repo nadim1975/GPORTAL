@@ -37,3 +37,5 @@ class RequestFuelTests(unittest.TestCase):
         self.ts.markFinal("test_invalidEnrollment", result,
                           "Enrollment Failed Verification")
 
+        self.so.clickCloseRequest()
+        

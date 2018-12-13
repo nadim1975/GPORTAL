@@ -29,6 +29,7 @@ class Status(SeleniumDriver):
                 if result:
                     self.resultList.append("PASS")
                     self.log.info("### VERIFICATION SUCCESSFUL :: + " + resultMessage)
+                    self.screenShot(resultMessage)
                 else:
                     self.resultList.append("FAIL")
                     self.log.info("### VERIFICATION FAILED :: + " + resultMessage)

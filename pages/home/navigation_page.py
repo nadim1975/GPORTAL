@@ -13,7 +13,7 @@ class NavigationPage(BasePage):
     # Locators
     _notifications = "//img[@class='toolbar-logo']"
     _hamburger_icon = "//img[@class='toolbar-logo menu-icon']"
-    _user_settings_icon = "//button[@class='user-button mat-button open']"
+    _user_settings_icon = "//mat-icon[@class='d-none d-md-flex mat-icon material-icons']"
     _home_icon = "//a[@class='crumb home']"
     _dashboard = "//span[contains(text(),'Dashboard')]"
     _fuel = "fuel-finder"

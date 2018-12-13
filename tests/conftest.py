@@ -15,7 +15,7 @@ def oneTimeSetUp(request, browser,environment):
     wdf = WebDriverFactory(browser,environment)
     driver = wdf.getWebDriverInstance()
     lp = LoginPage(driver)
-    lp.login('test@email.com', 'abcabc')
+    lp.login('Portalaviation1', 'Welcome01')
     #print("&&&&&&&&&&&  OneTime Setup Execution")
 
 # return the driver

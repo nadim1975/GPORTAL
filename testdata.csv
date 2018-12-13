@@ -1,2 +1,3 @@
 icao,airportName,tailNumber,nextDestination,quantity,flightNumber,arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin
-KHOU,Houston William P Hobby,5H-ZBZ,KMIA,300,NH292,10,00,00,19,00,00
+KHOU,Houston William P Hobby,C-FMFN,KMIA,300,NH292,10,00,00,19,00,00
+KHOU,Houston William P Hobby,VP-CTT,KMIA,300,65292,10,00,00,19,00,00

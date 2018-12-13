@@ -1,4 +1,5 @@
 import utilities.custom_logger as cl
+from utilities.util import Util
 import logging
 from base.basepage import BasePage
 from pages.home.navigation_page import NavigationPage
@@ -11,6 +12,8 @@ class LoginPage(BasePage):
         super().__init__(driver)
         self.driver = driver
         self.nav = NavigationPage(driver)
+        self.util = Util()
+
     # Locators
     _username_field = 'username'
     _password_field = 'password'
@@ -29,9 +32,10 @@ class LoginPage(BasePage):
     def clickLoginButton(self):
         self.elementClick(self._login_button)
 
-    def checkLoginError(self):
-        result1 = self.getElementAttributeValue("text",self._login_error,"xpath")
-        return result1
+    def checkLoginError(self,expectedErrorMsg):
+        errorMsg = self.getElementAttributeValue("text",self._login_error,"xpath")
+        result = self.util.verifyTextMatch(actualText=errorMsg,expectedText=expectedErrorMsg)
+        return result
         # Sorry, we were not able to identify your information in our system. Please try again, or if you recently changed your username or email address, please call 1 888 939 4852 for assistance.
 
     def clickForgotPassword(self):
