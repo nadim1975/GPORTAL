@@ -55,3 +55,4 @@ class NavigationPage(BasePage):
 
     def navigateHome(self):
         self.elementClick(self._home_icon,'xpath')
+        print('Navigating Home')

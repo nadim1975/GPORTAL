@@ -30,12 +30,12 @@ class RequestFuelTests(unittest.TestCase):
                              arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin):
         self.so.enterTripInformation(icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin)
+
         self.so.clickRequestFuel()
         # self.so.getQuoteNumber()
         # self.so.getSoNumber()
         result = self.so.verifySOcreated()
-        self.ts.markFinal("test_invalidEnrollment", result,
-                          "Enrollment Failed Verification")
+        self.ts.markFinal("test_SO_creation", result,
+                          "SO Created Successfully")
 
         self.so.clickCloseRequest()
-        

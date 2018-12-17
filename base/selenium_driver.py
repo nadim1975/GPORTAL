@@ -21,6 +21,7 @@ import utilities.custom_logger as cl
 import logging
 import time
 import os
+import pytest
 
 class SeleniumDriver():
 
@@ -33,6 +34,7 @@ class SeleniumDriver():
         """
         Takes screenshot of the current open web page
         """
+
         fileName = resultMessage + "." + str(round(time.time() * 1000)) + ".png"
         screenshotDirectory = "../screenshots/"
         relativeFileName = screenshotDirectory + fileName
@@ -45,6 +47,7 @@ class SeleniumDriver():
                 os.makedirs(destinationDirectory)
             self.driver.save_screenshot(destinationFile)
             self.log.info("Screenshot save to directory: " + destinationFile)
+            #return fileName
         except:
             self.log.error("### Exception Occurred when taking screenshot")
             print_stack()

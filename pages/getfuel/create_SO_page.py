@@ -1,3 +1,4 @@
+
 import utilities.custom_logger as cl
 import logging
 from base.basepage import BasePage
@@ -108,12 +109,13 @@ class CreateSalesOrderPage(BasePage):
         return self.isElementDisplayed(element=soElement)
 
     def clickCloseRequest(self):
-        closeElement = self.waitForElement(locator=self._close_order,locatorType='xpath',time=10)
+        closeElement = self.waitForElement(locator=self._close_order,locatorType='xpath',timeout=10)
         self.elementClick(element=closeElement)
 
 
     def enterTripInformation(self,icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin):
+        print('############################## Begin Fueling Process ##############################')
         self.enterICAO(icao,airportName)
         self.selectLocation()
         self.selectFBO()
