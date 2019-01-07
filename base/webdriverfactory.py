@@ -10,6 +10,8 @@ Example:
 """
 import traceback
 from selenium import webdriver
+################  IMPORT THIS TO RUN ON DOCKER ######################################
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import os
 
 class WebDriverFactory():
@@ -48,13 +50,21 @@ class WebDriverFactory():
             driver = webdriver.Ie(driverLocation)
 
         elif self.browser == "ff":
-            driver = webdriver.Firefox()
+            #driver = webdriver.Firefox()
+            capabilities = DesiredCapabilities.FIREFOX.copy()
+            driver = webdriver.Remote("http://127.0.0.1:4446/wd/hub", capabilities)
 
         elif self.browser == "chrome":
             # Set chrome driver
             driverLocation = "C:\\Users\\nhussein\\PycharmProjects\\selenium_workspace\\chromedriver.exe"
             os.environ["webdriver.chrome.driver"] = driverLocation
-            driver = webdriver.Chrome(driverLocation)
+        ####### THIS WILL USE DOCKER CONTAINER AND LAUNCH THE SCRIPT ON VNC ##########################3##########
+            capabilities = DesiredCapabilities.CHROME.copy()
+            #capabilities['platform'] = "WINDOWS"
+            #capabilities['version'] = "10"
+            capabilities['takesScreenshot'] = True
+            driver = webdriver.Remote("http://127.0.0.1:4446/wd/hub", capabilities)
+            #driver = webdriver.Chrome(driverLocation)
             driver.set_window_size(1920,1080)
         else:
             driver = webdriver.Firefox()
