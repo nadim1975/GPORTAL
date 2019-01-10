@@ -12,7 +12,6 @@ class DashboardPage(BasePage):
         self.driver = driver
 
     # Locators
-
     _notifications = "//img[@class='toolbar-logo']"
     _hamburger_icon = "//img[@class='toolbar-logo menu-icon']"
     _user_settings_icon = "//mat-icon[@class='d-none d-md-flex mat-icon material-icons']"
