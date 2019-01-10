@@ -13,6 +13,7 @@ import traceback
 import random, string
 import utilities.custom_logger as cl
 import logging
+import datetime
 
 class Util(object):
 
@@ -129,3 +130,18 @@ class Util(object):
                 return False
         else:
             return True
+
+    def todaysDate(self,format):
+        # 16 Jan 2019
+        if format == 'ddmmmyyyy':
+            today =  datetime.datetime.today().strftime('%d %b %Y')
+        # 16-01-2019
+        elif format == 'dd-mm-yyyy':
+            today = datetime.datetime.today().strftime('%d-%m-%Y')
+        # 16/01/2019
+        elif format == 'dd/mm/yyyy':
+            today = datetime.datetime.today().strftime('%d/%m/%Y')
+        # 16 January 2019
+        elif format == 'ddmmmmyy':
+            today = datetime.datetime.today().strftime('%d %B %Y')
+        return today
