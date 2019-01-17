@@ -5,6 +5,7 @@ import unittest
 import pytest
 from ddt import ddt,data,unpack
 from utilities.read_data import getCSVData
+import time
 
 
 @pytest.mark.usefixtures("oneTimeSetUp", "setUp")
@@ -27,7 +28,13 @@ class RequestFuelTests(unittest.TestCase):
     @unpack
     def test_validateSoCreation(self,icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin):
-        self.so.enterTripInformation(icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
+
+        self.so.enterICAO(icao,airportName)
+
+        self.so.selectLocation()
+        self.so.selectFBOSetup()
+
+        self.so.enterTripInformation(tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin)
 
         self.so.clickRequestFuel()

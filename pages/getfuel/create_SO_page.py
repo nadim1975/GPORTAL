@@ -15,26 +15,29 @@ class CreateSalesOrderPage(BasePage):
     ################
     ### Locators ###
     ################
-    _icao_field = "mat-input-0"
-    _airport_name = "//div[@id='mat-autocomplete-0']//small[contains(text(),'{0}')]"
-    _select_location = "ticker-div0"
-    _select_location2 ="//dt[@class='dt-font_title']"
-    _select_FBO = "//div[@class='row']//article[1]//button[contains(text(), Setup)][1]"
-        #"//article[1]//button[@class='mat-button mat-flat-button mat-primary']//span[contains(text(),'Setup')]"
+    _icao_field = "#quick-fuel-quote .fuel-quote-form__airport-code-input"  #"mat-input-0"
+    _airport_name = "//div[@class='cdk-overlay-pane']//small[contains(text(),'{0}')]"   #"//div[@class='cdk-overlay-pane']//span[contains(text(),'{0}')]"
+    _select_location = "ticker-item-1" #"ticker-div0"
+    _select_FBO_setup = "#fbo-1-setup-button" # for FBO2 use #fbo-2-setup-button and so forth.
+    _select_FBO_details = "#fbo-1-details-button"  # for FBO2 use #fbo-2-details-button and so forth.
 
-    _registry_list = "//div[@class='mat-select-value']"
-    _select_tail = "//span[contains(text(),'{0}')]"
-    _next_destination = "mat-input-2"
-    _gallons = "mat-input-4"
-    _flight_num = "mat-input-5"
-    _arrival_calendar = "mat-input-6"
-    _arrival_date = "[id='cdk-overlay-3'] [aria-label='December 5, 2018'] div"
-    _arrival_hour = "mat-input-7"
-    _arrival_minutes = "mat-input-8"
-    _departure_calendar ="mat-input-9"
-    _departure_date = "[id='cdk-overlay-4'] [aria-label='December 12, 2018'] div"
-    _departure_hour = "mat-input-10"
-    _departure_minutes = "mat-input-11"
+    _registry_list = "#fuel-quote-setup-registry-select" #"//div[@class='mat-select-value']"
+    _select_tail = "//div[@class='cdk-overlay-pane']//span[contains(text(),'{0}')]" #"//span[@class='mat-option-text'][contains(text(),'{0}')]" #"//span[contains(text(),'{0}')]"
+    _next_destination = "fuel-quote-setup-nextdestination" #"mat-input-2"
+    _gallons = "fuel-quote-setup-gallons" #"mat-input-4"
+    _flight_num = "fuel-quote-setup-flightnumber" #"mat-input-5"
+    _aircraft_ground = "#fuel-quote-setup-aircraftonground-input"
+    _arrival_calendar = "fuel-quote-setup-arrivaldate" #"mat-input-6"
+    _arrival_date = ".mat-calendar-table [aria-label='January 16, 2019'] div" #"[id='cdk-overlay-3'] [aria-label='December 5, 2018'] div"
+    _arrival_hour = "fuel-quote-setup-arrivalhour" #"mat-input-7"
+    _arrival_minutes = "fuel-quote-setup-arrivalminute" #"mat-input-8"
+    _departure_calendar = "fuel-quote-setup-departuredate" #"mat-input-9"
+    _departure_date = ".mat-calendar-table [aria-label='January 17, 2019'] div" #"[id='cdk-overlay-4'] [aria-label='December 12, 2018'] div"
+    _departure_hour = "fuel-quote-setup-departurehour" #"mat-input-10"
+    _departure_minutes =  "fuel-quote-setup-departureminute" #"mat-input-11"
+    _additional_notes = "fuel-quote-setup-freehandnotes"  #ID
+    _email = "fuel-quote-setup-email" #ID
+    _fax = "fuel-quote-setup-fax" #Fax
     _request_fuel = "//span[contains(text(),'Request')]"
     _close_order = "//span[contains(text(),'Close')]"
     _quote_number = "//span[@class='quote-id']"
@@ -46,7 +49,7 @@ class CreateSalesOrderPage(BasePage):
 
     #Houston William P Hobby
     def enterICAO(self, icao,airportName):
-        icaoElement = self.waitForElement(self._icao_field)
+        icaoElement = self.waitForElement(self._icao_field,'css')
         self.sendKeys(icao, element=icaoElement)
         self.elementClick(locator=self._airport_name.format(airportName),locatorType="xpath")
 
@@ -54,15 +57,19 @@ class CreateSalesOrderPage(BasePage):
         locationElement = self.waitForElement(locator=self._select_location,locatorType='id',timeout=60,pollFrequency=1)
         self.elementClick(element=locationElement)
 
-    #selecting first FBO
-    def selectFBO(self):
-
+    #selecting FBO Setup button
+    def selectFBOSetup(self):
         self.webScroll()
-        self.elementClick(self._select_FBO,'xpath')
+        self.elementClick(self._select_FBO_setup,'css')
+
+    # selecting FBO Details button
+    def selectFBODetails(self):
+        self.webScroll()
+        self.elementClick(self._select_FBO_details, 'css')
 
     #5H-ZBZ
     def selectTail(self,tailNumber):
-        registryElement = self.waitForElement(locator=self._registry_list,locatorType='xpath',timeout=10)
+        registryElement = self.waitForElement(locator=self._registry_list,locatorType='css',timeout=10)
         self.elementClick(element=registryElement)
         self.elementClick(self._select_tail.format(tailNumber),'xpath')
 
@@ -78,8 +85,6 @@ class CreateSalesOrderPage(BasePage):
     def selectArrivalDate(self,arrivalDate,arrivalHour,arrivalMin):
         self.elementClick(self._arrival_calendar)
         time.sleep(1)
-        # arrivalDateElement = self.waitForElement(self._arrival_date.format(arrivalDate),'css_selector')
-        # self.elementClick(element=arrivalDateElement)
         self.elementClick(self._arrival_date, 'css')
         self.sendKeys(arrivalHour,self._arrival_hour)
         self.sendKeys(arrivalMin,self._arrival_minutes)
@@ -113,12 +118,10 @@ class CreateSalesOrderPage(BasePage):
         self.elementClick(element=closeElement)
 
 
-    def enterTripInformation(self,icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
+    def enterTripInformation(self,tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin):
         print('############################## Begin Fueling Process ##############################')
-        self.enterICAO(icao,airportName)
-        self.selectLocation()
-        self.selectFBO()
+
         self.selectTail(tailNumber)
         self.enterNextDestination(nextDestination)
         self.enterGallons(quantity)

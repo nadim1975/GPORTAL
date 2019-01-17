@@ -10,6 +10,8 @@ Example:
 """
 import traceback
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options as ff_options #to run headless firefox
+from selenium.webdriver.chrome.options import Options as chrome_options   #for running headless chrome
 ################  IMPORT THIS TO RUN ON DOCKER ######################################
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import os
@@ -50,6 +52,9 @@ class WebDriverFactory():
             driver = webdriver.Ie(driverLocation)
 
         elif self.browser == "ff":
+             driver = webdriver.Firefox()
+
+        elif self.browser == "ffdocker":
             #driver = webdriver.Firefox()
             capabilities = DesiredCapabilities.FIREFOX.copy()
             driver = webdriver.Remote("http://127.0.0.1:4446/wd/hub", capabilities)
@@ -58,14 +63,33 @@ class WebDriverFactory():
             # Set chrome driver
             driverLocation = "C:\\Users\\nhussein\\PycharmProjects\\selenium_workspace\\chromedriver.exe"
             os.environ["webdriver.chrome.driver"] = driverLocation
-        ####### THIS WILL USE DOCKER CONTAINER AND LAUNCH THE SCRIPT ON VNC ##########################3##########
+            driver = webdriver.Chrome(driverLocation)
+            driver.set_window_size(1920, 1080)
+
+        elif self.browser == "chromedocker":
+            # Set chrome driver
+            driverLocation = "C:\\Users\\nhussein\\PycharmProjects\\selenium_workspace\\chromedriver.exe"
+            os.environ["webdriver.chrome.driver"] = driverLocation
+            ####### THIS WILL USE DOCKER CONTAINER AND LAUNCH THE SCRIPT ON VNC ##########################3##########
             capabilities = DesiredCapabilities.CHROME.copy()
             #capabilities['platform'] = "WINDOWS"
             #capabilities['version'] = "10"
             capabilities['takesScreenshot'] = True
             driver = webdriver.Remote("http://127.0.0.1:4446/wd/hub", capabilities)
-            #driver = webdriver.Chrome(driverLocation)
             driver.set_window_size(1920,1080)
+
+        elif self.browser == "chromeheadless":
+            driverLocation = "C:\\Users\\nhussein\\PycharmProjects\\selenium_workspace\\chromedriver.exe"
+            os.environ["webdriver.chrome.driver"] = driverLocation
+            options = chrome_options()
+            options.headless = True
+            driver = webdriver.Chrome(driverLocation, chrome_options=options)
+
+        elif self.browser == "ffheadless":
+            options = ff_options()
+            options.headless = True
+            driver = webdriver.Firefox(options=options,
+                                       executable_path="C:\\Users\\nhussein\\PycharmProjects\\selenium_workspace\\geckodriver.exe")
         else:
             driver = webdriver.Firefox()
 
