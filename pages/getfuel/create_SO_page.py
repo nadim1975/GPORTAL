@@ -69,6 +69,7 @@ class CreateSalesOrderPage(BasePage):
 
     #5H-ZBZ
     def selectTail(self,tailNumber):
+        time.sleep(2)
         registryElement = self.waitForElement(locator=self._registry_list,locatorType='css',timeout=10)
         self.elementClick(element=registryElement)
         self.elementClick(self._select_tail.format(tailNumber),'xpath')

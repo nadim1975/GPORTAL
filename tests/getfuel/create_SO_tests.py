@@ -19,12 +19,15 @@ class RequestFuelTests(unittest.TestCase):
         self.db = DashboardPage(self.driver)
 
     def setUp(self):
+        #if stuck in the request fuel window then close it
+        self.so.clickCloseRequest()
         self.db.navigateHome()
 
     @pytest.mark.run(order=1)
     #@data(("JavaScript for beginners","4143202652384595","1220","101"),("Learn Python 3 from scratch","41426543764387900","1221","303"))
     #you can provide with only with the file name without the path since it is saved under the project
-    @data(*getCSVData("/Users/nhussein/PycharmProjects/Gportal/createSO_testdata.csv"))
+    #@data(*getCSVData("/Users/nhussein/PycharmProjects/Gportal/createSO_testdata.csv"))
+    @data(*getCSVData("createSO_testdata.csv"))
     @unpack
     def test_validateSoCreation(self,icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDay,arrivalHour,arrivalMin,departureDay,departureHour,departureMin):
@@ -43,5 +46,3 @@ class RequestFuelTests(unittest.TestCase):
         result = self.so.verifySOcreated()
         self.ts.markFinal("test_SO_creation", result,
                           "SO Created Successfully")
-
-        self.so.clickCloseRequest()
