@@ -13,7 +13,7 @@ import traceback
 import random, string
 import utilities.custom_logger as cl
 import logging
-import datetime
+from datetime import datetime,timedelta
 
 class Util(object):
 
@@ -131,17 +131,25 @@ class Util(object):
         else:
             return True
 
-    def todaysDate(self,format):
+    def todaysDate(self,format=None,days=0):
+         adjustedDate = datetime.today() + timedelta(days=days)
+         #print(adjustedDate)
         # 16 Jan 2019
-        if format == 'ddmmmyyyy':
-            today =  datetime.datetime.today().strftime('%d %b %Y')
+         if format == 'ddmmmyyyy':
+
+            today = adjustedDate.strftime('%d %b %Y')
         # 16-01-2019
-        elif format == 'dd-mm-yyyy':
-            today = datetime.datetime.today().strftime('%d-%m-%Y')
+         elif format == 'dd-mm-yyyy':
+            today = adjustedDate.strftime('%d-%m-%Y')
         # 16/01/2019
-        elif format == 'dd/mm/yyyy':
-            today = datetime.datetime.today().strftime('%d/%m/%Y')
+         elif format == 'dd/mm/yyyy':
+            today = adjustedDate.strftime('%d/%m/%Y')
         # 16 January 2019
-        elif format == 'ddmmmmyy':
-            today = datetime.datetime.today().strftime('%d %B %Y')
-        return today
+         elif format == 'dd month yyyy':
+            today = adjustedDate.strftime('%d %B %Y')
+        # January 16, 2019
+         elif format == 'month dd,yyyy':
+            today = adjustedDate.strftime('%B %d, %Y')
+         else:
+            today = adjustedDate.strftime('%B %d, %Y')
+         return today

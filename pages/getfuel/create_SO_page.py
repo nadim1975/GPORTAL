@@ -3,6 +3,7 @@ import utilities.custom_logger as cl
 import logging
 from base.basepage import BasePage
 import time
+from colorama import Fore
 
 class CreateSalesOrderPage(BasePage):
 
@@ -28,11 +29,11 @@ class CreateSalesOrderPage(BasePage):
     _flight_num = "fuel-quote-setup-flightnumber" #"mat-input-5"
     _aircraft_ground = "#fuel-quote-setup-aircraftonground-input"
     _arrival_calendar = "fuel-quote-setup-arrivaldate" #"mat-input-6"
-    _arrival_date = ".mat-calendar-table [aria-label='January 16, 2019'] div" #"[id='cdk-overlay-3'] [aria-label='December 5, 2018'] div"
+    _arrival_date = ".mat-calendar-table [aria-label='{0}'] div" #"[id='cdk-overlay-3'] [aria-label='December 5, 2018'] div"
     _arrival_hour = "fuel-quote-setup-arrivalhour" #"mat-input-7"
     _arrival_minutes = "fuel-quote-setup-arrivalminute" #"mat-input-8"
     _departure_calendar = "fuel-quote-setup-departuredate" #"mat-input-9"
-    _departure_date = ".mat-calendar-table [aria-label='January 17, 2019'] div" #"[id='cdk-overlay-4'] [aria-label='December 12, 2018'] div"
+    _departure_date = ".mat-calendar-table [aria-label='{0}'] div" #"[id='cdk-overlay-4'] [aria-label='December 12, 2018'] div"
     _departure_hour = "fuel-quote-setup-departurehour" #"mat-input-10"
     _departure_minutes =  "fuel-quote-setup-departureminute" #"mat-input-11"
     _additional_notes = "fuel-quote-setup-freehandnotes"  #ID
@@ -86,18 +87,34 @@ class CreateSalesOrderPage(BasePage):
     def selectArrivalDate(self,arrivalDate,arrivalHour,arrivalMin):
         self.elementClick(self._arrival_calendar)
         time.sleep(1)
-        self.elementClick(self._arrival_date, 'css')
+        if arrivalDate == 'na':
+            arrivalDate = self.util.todaysDate()
+        self.elementClick(locator=self._arrival_date.format(arrivalDate), locatorType="css")
+        #self.elementClick(self._arrival_date, 'css')
         self.sendKeys(arrivalHour,self._arrival_hour)
         self.sendKeys(arrivalMin,self._arrival_minutes)
 
     def selectDepartureDate(self,departureDate,departureHour,departureMin):
         self.elementClick(self._departure_calendar)
-        # departureDateElement = self.waitForElement(self._departure_date.format(departureDate),'css_selector')
-        # self.elementClick(element=departureDateElement)
         time.sleep(1)
-        self.elementClick(self._departure_date,'css')
+        if departureDate == 'na':
+            departureDate = self.util.todaysDate(format='month dd,yyyy',days=1)
+
+        self.elementClick(locator=self._departure_date.format(departureDate),locatorType='css')
         self.sendKeys(departureHour, self._departure_hour)
         self.sendKeys(departureMin, self._departure_minutes)
+
+    def enterNotes(self,notes=None):
+        if notes != 'na':
+            self.sendKeys(notes,self._additional_notes)
+
+    def enterEmail(self,email=None):
+        if email != 'na':
+            self.sendKeys(email,self._email)
+
+    def enterFax(self,fax=None):
+        if fax != 'na':
+            self.sendKeys(fax,self._fax)
 
     def clickRequestFuel(self):
         self.elementClick(self._request_fuel,'xpath')
@@ -120,7 +137,7 @@ class CreateSalesOrderPage(BasePage):
 
 
     def enterTripInformation(self,tailNumber,nextDestination,quantity,flightNumber,
-                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin):
+                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax):
         print('############################## Begin Fueling Process ##############################')
 
         self.selectTail(tailNumber)
@@ -129,6 +146,9 @@ class CreateSalesOrderPage(BasePage):
         self.enterFlightNumber(flightNumber)
         self.selectArrivalDate(arrivalDate,arrivalHour,arrivalMin)
         self.selectDepartureDate(departureDate,departureHour,departureMin)
+        self.enterNotes(notes)
+        self.enterEmail(email)
+        self.enterFax(fax)
 
 
     # def verifyEnrollFailed(self):
