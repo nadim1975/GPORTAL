@@ -98,7 +98,7 @@ class CreateSalesOrderPage(BasePage):
         self.elementClick(self._departure_calendar)
         time.sleep(1)
         if departureDate == 'na':
-            departureDate = self.util.todaysDate(format='month dd,yyyy',days=1)
+            departureDate = self.util.todaysDate(format='month dd,yyyy',days=-1)
 
         self.elementClick(locator=self._departure_date.format(departureDate),locatorType='css')
         self.sendKeys(departureHour, self._departure_hour)
