@@ -136,7 +136,7 @@ class CreateSalesOrderPage(BasePage):
         self.elementClick(element=closeElement)
 
 
-    def enterTripInformation(self,tailNumber,nextDestination,quantity,flightNumber,
+    def enterSoInformation(self,tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax):
         print('############################## Begin Fueling Process ##############################')
 

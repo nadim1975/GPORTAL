@@ -37,7 +37,7 @@ class RequestFuelTests(unittest.TestCase):
         self.so.selectLocation()
         self.so.selectFBOSetup()
 
-        self.so.enterTripInformation(tailNumber,nextDestination,quantity,flightNumber,
+        self.so.enterSoInformation(tailNumber,nextDestination,quantity,flightNumber,
                              arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax)
 
         self.so.clickRequestFuel()
