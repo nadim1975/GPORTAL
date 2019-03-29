@@ -1,3 +1,3 @@
-icao,airportName,tailNumber,nextDestination,quantity,flightNumber,arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax
-KHOU,Houston William P Hobby,N247JD,KMIA,300,NH292,na,00,00,na,00,00,na,na,na
+icao,airportName,tailNumber,nextDestination,quantity,flightNumber,arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax,phone
+KHOU,Houston William P Hobby,N247JD,KMIA,300,NH292,na,00,00,na,00,00,na,na,na.na
 KFLL,Fort Lauderdale/hollywood Intl,N247JD,KHOU,366,NH652,"February 28, 2019",00,00,"February 30, 2019",00,00,NH-Testing,nhussein@wfscorp.com,3054288293

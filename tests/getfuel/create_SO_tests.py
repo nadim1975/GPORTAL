@@ -30,7 +30,7 @@ class RequestFuelTests(unittest.TestCase):
     @data(*getCSVData("createSO_testdata.csv"))
     @unpack
     def test_validateSoCreation(self,icao,airportName,tailNumber,nextDestination,quantity,flightNumber,
-                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax):
+                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax,phone):
 
         self.so.enterICAO(icao,airportName)
 
@@ -38,7 +38,7 @@ class RequestFuelTests(unittest.TestCase):
         self.so.selectFBOSetup()
 
         self.so.enterSoInformation(tailNumber,nextDestination,quantity,flightNumber,
-                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax)
+                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax,phone)
 
         self.so.clickRequestFuel()
         # self.so.getQuoteNumber()

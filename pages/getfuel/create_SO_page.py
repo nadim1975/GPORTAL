@@ -38,7 +38,8 @@ class CreateSalesOrderPage(BasePage):
     _departure_minutes =  "fuel-quote-setup-departureminute" #"mat-input-11"
     _additional_notes = "fuel-quote-setup-freehandnotes"  #ID
     _email = "fuel-quote-setup-email" #ID
-    _fax = "fuel-quote-setup-fax" #Fax
+    _fax = "fuel-quote-setup-fax" #ID
+    _phoneNumber = ""
     _request_fuel = "//span[contains(text(),'Request')]"
     _close_order = "//span[contains(text(),'Close')]"
     _quote_number = "//span[@class='quote-id']"
@@ -116,6 +117,10 @@ class CreateSalesOrderPage(BasePage):
         if fax != 'na':
             self.sendKeys(fax,self._fax)
 
+    def enterPhone(self,phone=None):
+        if phone != 'na':
+            self.sendKeys(phone,self._phoneNumber)
+
     def clickRequestFuel(self):
         self.elementClick(self._request_fuel,'xpath')
 
@@ -137,7 +142,7 @@ class CreateSalesOrderPage(BasePage):
 
 
     def enterSoInformation(self,tailNumber,nextDestination,quantity,flightNumber,
-                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax):
+                             arrivalDate,arrivalHour,arrivalMin,departureDate,departureHour,departureMin,notes,email,fax,phone):
         print('############################## Begin Fueling Process ##############################')
 
         self.selectTail(tailNumber)
@@ -149,6 +154,7 @@ class CreateSalesOrderPage(BasePage):
         self.enterNotes(notes)
         self.enterEmail(email)
         self.enterFax(fax)
+        self.enterPhone(phone)
 
 
     # def verifyEnrollFailed(self):
